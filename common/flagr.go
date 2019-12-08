@@ -3,15 +3,12 @@ package common
 import (
 	"context"
 
-	"github.com/antihax/optional"
 	"github.com/checkr/goflagr"
 )
 
 // GetFlagByKey returns flag by key name
 func GetFlagByKey(ctx context.Context, client *goflagr.APIClient, key string) (*goflagr.Flag, error) {
-	flags, _, err := client.FlagApi.FindFlags(ctx, &goflagr.FindFlagsOpts{
-		Preload: optional.NewBool(true),
-	})
+	flags, _, err := client.FlagApi.FindFlags(ctx, nil)
 	if err != nil {
 		return nil, err
 	}

@@ -10,6 +10,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/cikupin/feature-flag-example/common"
 	"github.com/cikupin/feature-flag-example/handler"
 	"github.com/urfave/cli/v2"
 )
@@ -26,9 +27,12 @@ var ServeHTTP = &cli.Command{
 }
 
 func serveHTTP(ctx context.Context) {
+	flagrClient := common.GetFlagrClient()
+	hdlr := handler.NewHandler(flagrClient)
+
 	h := http.NewServeMux()
-	h.HandleFunc("/toggle-feature", handler.ToggleFeature)
-	h.HandleFunc("/toggle-provider", handler.ToggleProvider)
+	h.HandleFunc("/toggle-feature", hdlr.ToggleFeature)
+	h.HandleFunc("/toggle-provider", hdlr.ToggleProvider)
 
 	done := make(chan os.Signal, 1)
 	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
