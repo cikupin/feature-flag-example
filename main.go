@@ -14,6 +14,7 @@ func main() {
 		Usage: "feature flag example using flagr",
 		Commands: []*cli.Command{
 			cmd.GenerateFeatureToggle,
+			cmd.ServeHTTP,
 		},
 	}
 
