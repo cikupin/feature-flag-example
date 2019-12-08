@@ -156,7 +156,7 @@ func generateDistribution(ctx context.Context, client *goflagr.APIClient) {
 		log.Fatalln("No flag found")
 	}
 
-	segment, err := common.GetSegmentByKey(ctx, *flag, constant.SegmentDefault)
+	segment, err := common.GetSegmentByKey(ctx, client, flag.Id, constant.SegmentDefault)
 	if err != nil {
 		log.Fatalln(err.Error())
 	}

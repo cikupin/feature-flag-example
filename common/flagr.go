@@ -25,8 +25,13 @@ func GetFlagByKey(ctx context.Context, client *goflagr.APIClient, key string) (*
 }
 
 // GetSegmentByKey returns segment by segment description
-func GetSegmentByKey(ctx context.Context, flag goflagr.Flag, key string) (*goflagr.Segment, error) {
-	for _, segment := range flag.Segments {
+func GetSegmentByKey(ctx context.Context, client *goflagr.APIClient, flagID int64, key string) (*goflagr.Segment, error) {
+	segments, _, err := client.SegmentApi.FindSegments(ctx, flagID)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, segment := range segments {
 		if segment.Description == key {
 			return &segment, nil
 		}
